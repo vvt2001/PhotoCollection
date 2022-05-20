@@ -59,14 +59,8 @@ class CollectionViewCell: UICollectionViewCell {
     }
     
     func changeChosenCell(){
-        if isChosen{
-            isChosen = false
-            highlightView.alpha = 0
-        }
-        else{
-            isChosen = true
-            highlightView.alpha = 0.5
-        }
+        isChosen = isChosen ? false : true
+        highlightView.alpha = isChosen ? 0.5 : 0
     }
 }
 
