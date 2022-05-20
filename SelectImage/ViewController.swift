@@ -146,7 +146,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         if collectionView == self.imageCollectionView{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
             let index = selectedIndexArray.firstIndex(of: indexPath.row)
-            cell.createCell(index: index ?? 0, assets: images[indexPath.row])
+            cell.createCell(index: index ?? 0, asset: images[indexPath.row])
             return cell
         }
         else{
@@ -155,7 +155,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             
             //get the selected image assets
             cell.selectedIndex = selectedIndexArray[indexPath.row]
-            cell.createCell(assets: images[selectedIndexArray[indexPath.row]])
+            cell.createCell(asset: images[selectedIndexArray[indexPath.row]])
             return cell
         }
     }
