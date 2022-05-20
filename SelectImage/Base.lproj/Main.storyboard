@@ -148,10 +148,10 @@
                         <outlet property="addButton" destination="Wn4-0a-adG" id="Pp6-kg-Byf"/>
                         <outlet property="backButton" destination="ksX-0s-NBT" id="omR-jM-gwS"/>
                         <outlet property="headerView" destination="Jt0-ob-VMn" id="rlV-Yy-VJd"/>
-                        <outlet property="imageCollection" destination="Yc2-0f-UBs" id="SMG-Cv-r1B"/>
+                        <outlet property="imageCollectionView" destination="Yc2-0f-UBs" id="SMG-Cv-r1B"/>
                         <outlet property="imageSelectionView" destination="vVB-X3-aaP" id="SLg-AH-FXf"/>
                         <outlet property="informLabel" destination="anm-x3-Yme" id="tVO-xr-Nps"/>
-                        <outlet property="selectedImageCollection" destination="8Rz-T6-bSF" id="KJJ-gp-u4t"/>
+                        <outlet property="selectedImageCollectionView" destination="8Rz-T6-bSF" id="KJJ-gp-u4t"/>
                         <outlet property="titleLabel" destination="pv0-S2-pDt" id="VBG-El-E2z"/>
                     </connections>
                 </viewController>
