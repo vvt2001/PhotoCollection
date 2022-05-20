@@ -68,14 +68,6 @@ class ViewController: UIViewController {
         }
     }
     
-    //delegate functions to view controller's collection views
-    private func collectionViewDelegate(){
-        imageCollection.delegate = self
-        imageCollection.dataSource = self
-        selectedImageCollection.delegate = self
-        selectedImageCollection.dataSource = self
-    }
-    
     //register cells into collection views
     private func collectionViewCellRegister(){
         self.imageCollection.register(UINib(nibName: "CollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "CollectionViewCell")
@@ -112,7 +104,12 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        collectionViewDelegate()
+        
+        imageCollection.delegate = self
+        imageCollection.dataSource = self
+        selectedImageCollection.delegate = self
+        selectedImageCollection.dataSource = self
+        
         collectionViewCellRegister()
         makeButtonRound()
         getImage()
