@@ -21,19 +21,19 @@ class ViewController: UIViewController {
     @IBOutlet weak var selectedImageCollectionView: UICollectionView!
     
     private var isSelected = false
-    private var selectedArray = [Int]()
+    private var selectedIndexArray = [Int]()
     private var selectedImageCellSize: Int?
     private var images = [PHAsset]()
     
     @IBAction func goBack(_ sender: UIButton){
         isSelected = false
-        for value in selectedArray{
+        for value in selectedIndexArray{
             let indexPath = IndexPath(row: value, section: 0)
             let cell = imageCollectionView.cellForItem(at: indexPath) as! CollectionViewCell
             cell.highlightView.alpha = 0
             cell.isChosen = false
         }
-        selectedArray.removeAll()
+        selectedIndexArray.removeAll()
         self.imageSelectionView.isHidden = true
         self.backButton.isHidden = true
         updateSelectOrder()
@@ -41,7 +41,7 @@ class ViewController: UIViewController {
     
     private func updateSelectOrder(){
         var order = 1
-        for value in selectedArray{
+        for value in selectedIndexArray{
             let indexPath = IndexPath(row: value, section: 0)
             let cell = imageCollectionView.cellForItem(at: indexPath) as! CollectionViewCell
             cell.pickOrderLabel.text = "\(order)"
@@ -124,7 +124,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             return images.count
         }
         else{
-            return selectedArray.count
+            return selectedIndexArray.count
         }
     }
     
@@ -145,7 +145,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.imageCollectionView{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
-            let index = selectedArray.firstIndex(of: indexPath.row)
+            let index = selectedIndexArray.firstIndex(of: indexPath.row)
             cell.createCell(index: index ?? 0, assets: images[indexPath.row])
             return cell
         }
@@ -153,12 +153,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SelectedImageCollectionViewCell", for: indexPath) as! SelectedImageCollectionViewCell
             cell.delegate = self
             
-            //get the selected image
-            let imageIndexPath = IndexPath(row: selectedArray[indexPath.row], section: 0)
-            let imageCell = imageCollectionView.cellForItem(at: imageIndexPath) as! CollectionViewCell
-            let image = imageCell.imageView.image
-            cell.selectedIndex = selectedArray[indexPath.row]
-            cell.createCell(image: image!)
+            //get the selected image assets
+            cell.selectedIndex = selectedIndexArray[indexPath.row]
+            cell.createCell(assets: images[selectedIndexArray[indexPath.row]])
             return cell
         }
     }
@@ -169,9 +166,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             if cell.isChosen{
                 cell.isChosen = false
                 cell.highlightView.alpha = 0
-                let index = selectedArray.firstIndex(of: indexPath.row)
-                selectedArray.remove(at: index!)
-                if selectedArray.count == 0{
+                let index = selectedIndexArray.firstIndex(of: indexPath.row)
+                selectedIndexArray.remove(at: index!)
+                if selectedIndexArray.count == 0{
                     isSelected = false
                     self.imageSelectionView.isHidden = true
                     self.backButton.isHidden = true
@@ -184,10 +181,10 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
                     isSelected = true
                     self.imageSelectionView.isHidden = false
                     self.backButton.isHidden = false
-                    selectedArray.append(indexPath.row)
+                    selectedIndexArray.append(indexPath.row)
                 }
                 else{
-                    selectedArray.append(indexPath.row)
+                    selectedIndexArray.append(indexPath.row)
                 }
                 cell.highlightView.alpha = 0.5
                 updateSelectOrder()
@@ -204,8 +201,8 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let item = selectedArray.remove(at: sourceIndexPath.row)
-        selectedArray.insert(item, at: destinationIndexPath.row)
+        let item = selectedIndexArray.remove(at: sourceIndexPath.row)
+        selectedIndexArray.insert(item, at: destinationIndexPath.row)
     }
 }
 
@@ -216,9 +213,9 @@ extension ViewController: SelectedImageCollectionViewCellDelegate{
         let cell = self.imageCollectionView.cellForItem(at: indexPath) as! CollectionViewCell
         cell.isChosen = false
         cell.highlightView.alpha = 0
-        let deletedIndex = selectedArray.firstIndex(of: indexPath.row)
-        selectedArray.remove(at: deletedIndex!)
-        if selectedArray.count == 0{
+        let deletedIndex = selectedIndexArray.firstIndex(of: indexPath.row)
+        selectedIndexArray.remove(at: deletedIndex!)
+        if selectedIndexArray.count == 0{
             isSelected = false
             self.imageSelectionView.isHidden = true
             self.backButton.isHidden = true

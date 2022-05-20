@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Photos
 
 class SelectedImageCollectionViewCell: UICollectionViewCell {
 
@@ -19,8 +20,14 @@ class SelectedImageCollectionViewCell: UICollectionViewCell {
         delegate?.selectedImageCollectionViewCell(self, didTapDeleteButtonWithIndex: selectedIndex)
     }
     
-    func createCell(image: UIImage){
-        self.imageView.image = image
+    func createCell(assets: PHAsset){
+        // get image or video's thumbnail
+        let manager = PHImageManager.default()
+        manager.requestImage(for: assets, targetSize: CGSize(width: self.bounds.width, height: self.bounds.height), contentMode: .aspectFill, options: nil){ image, _ in
+            DispatchQueue.main.async {
+                self.imageView.image = image
+            }
+        }
     }
 }
 
