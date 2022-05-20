@@ -57,7 +57,7 @@
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Yc2-0f-UBs">
                                 <rect key="frame" x="0.0" y="70" width="414" height="666"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="qsc-QH-e4C">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="1" minimumInteritemSpacing="1" id="qsc-QH-e4C">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -84,29 +84,45 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wn4-0a-adG">
-                                        <rect key="frame" x="349" y="10" width="50" height="31"/>
+                                        <rect key="frame" x="350.66666666666669" y="9.9999999999999982" width="48.333333333333314" height="28.333333333333329"/>
                                         <color key="backgroundColor" red="1" green="0.23137254901960785" blue="0.18823529411764706" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Add">
+                                            <fontDescription key="titleFontDescription" type="boldSystem" pointSize="12"/>
                                             <color key="baseForegroundColor" red="0.97647058819999999" green="0.97647058819999999" blue="0.97647058819999999" alpha="1" colorSpace="calibratedRGB"/>
                                         </buttonConfiguration>
                                     </button>
-                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="mvW-lf-0y4">
-                                        <rect key="frame" x="0.0" y="49" width="414" height="61"/>
-                                        <viewLayoutGuide key="contentLayoutGuide" id="VIL-o6-abr"/>
-                                        <viewLayoutGuide key="frameLayoutGuide" id="SLf-Zv-GM0"/>
-                                    </scrollView>
+                                    <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="8Rz-T6-bSF">
+                                        <rect key="frame" x="0.0" y="50.333333333333371" width="414" height="56.666666666666657"/>
+                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="14" minimumInteritemSpacing="14" id="fbG-7E-ffA">
+                                            <size key="itemSize" width="128" height="128"/>
+                                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        </collectionViewFlowLayout>
+                                        <cells>
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="N3P-fV-xqE">
+                                                <rect key="frame" x="0.0" y="-35.666666666666664" width="128" height="128"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="5Eh-p5-cv7">
+                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                </collectionViewCellContentView>
+                                            </collectionViewCell>
+                                        </cells>
+                                    </collectionView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="Wn4-0a-adG" secondAttribute="trailing" constant="15" id="0YC-wB-koC"/>
+                                    <constraint firstItem="8Rz-T6-bSF" firstAttribute="top" secondItem="Wn4-0a-adG" secondAttribute="bottom" constant="12" id="3kp-hK-2aS"/>
                                     <constraint firstItem="anm-x3-Yme" firstAttribute="top" secondItem="vVB-X3-aaP" secondAttribute="top" constant="15" id="6RS-Ta-Ai7"/>
+                                    <constraint firstItem="8Rz-T6-bSF" firstAttribute="leading" secondItem="vVB-X3-aaP" secondAttribute="leading" id="9ZF-He-Jcw"/>
                                     <constraint firstItem="Wn4-0a-adG" firstAttribute="top" secondItem="vVB-X3-aaP" secondAttribute="top" constant="10" id="C9F-w5-l2N"/>
-                                    <constraint firstAttribute="trailing" secondItem="mvW-lf-0y4" secondAttribute="trailing" id="GF1-YL-Lxl"/>
-                                    <constraint firstItem="mvW-lf-0y4" firstAttribute="top" secondItem="Wn4-0a-adG" secondAttribute="bottom" constant="19" id="Ggl-dA-cYC"/>
-                                    <constraint firstAttribute="bottom" secondItem="mvW-lf-0y4" secondAttribute="bottom" constant="8" id="JY9-rV-Qdv"/>
+                                    <constraint firstAttribute="bottom" secondItem="8Rz-T6-bSF" secondAttribute="bottom" constant="11" id="Lhc-Om-Sze"/>
                                     <constraint firstItem="anm-x3-Yme" firstAttribute="leading" secondItem="vVB-X3-aaP" secondAttribute="leading" constant="16" id="Mac-II-8kt"/>
-                                    <constraint firstItem="mvW-lf-0y4" firstAttribute="leading" secondItem="vVB-X3-aaP" secondAttribute="leading" id="R7q-sb-4n5"/>
+                                    <constraint firstAttribute="trailing" secondItem="8Rz-T6-bSF" secondAttribute="trailing" id="aLL-Kj-OUb"/>
                                     <constraint firstAttribute="height" constant="118" id="eJJ-X3-uCJ"/>
                                 </constraints>
                             </view>
@@ -135,6 +151,7 @@
                         <outlet property="imageCollection" destination="Yc2-0f-UBs" id="SMG-Cv-r1B"/>
                         <outlet property="imageSelectionView" destination="vVB-X3-aaP" id="SLg-AH-FXf"/>
                         <outlet property="informLabel" destination="anm-x3-Yme" id="tVO-xr-Nps"/>
+                        <outlet property="selectedImageCollection" destination="8Rz-T6-bSF" id="KJJ-gp-u4t"/>
                         <outlet property="titleLabel" destination="pv0-S2-pDt" id="VBG-El-E2z"/>
                     </connections>
                 </viewController>

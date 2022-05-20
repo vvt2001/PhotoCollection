@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Photos
 
 class CollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
@@ -14,40 +15,46 @@ class CollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var pickOrderLabel: UILabel!
 
     var isChosen = false
-    var cellSize: Int!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        //create gradient layer
         let view = UIView(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-
         let gradient = CAGradientLayer()
-
         gradient.frame = view.frame
-
         gradient.colors = [UIColor.clear.cgColor, UIColor.black.cgColor]
-
         gradient.locations = [0.65, 1.0]
-
         view.layer.insertSublayer(gradient, at: 0)
-
         imageView.addSubview(view)
-
         imageView.bringSubviewToFront(view)
     }
-    func createCell(index: Int) {
+    
+    func createCell(index: Int, assets: PHAsset) {
+        // get image or video's thumbnail
+        let manager = PHImageManager.default()
+        manager.requestImage(for: assets, targetSize: CGSize(width: self.bounds.width, height: self.bounds.height), contentMode: .aspectFill, options: nil){ image, _ in
+            DispatchQueue.main.async {
+                self.imageView.image = image
+            }
+        }
         
-        let images = [
-            UIImage(named: "angry"),
-            UIImage(named: "confused"),
-            UIImage(named: "happy"),
-            UIImage(named: "sad"),
-            UIImage(named: "meh"),
-            UIImage(named: "crying"),
-            UIImage(named: "sleepy"),
-            UIImage(named: "goofy")
-        ].compactMap({$0})
-        self.imageView.image = images.randomElement()
+        // get video's duration
+        if assets.duration != 0{
+            let minutes = Int(assets.duration / 60)
+            let seconds = Int(assets.duration.truncatingRemainder(dividingBy: 60))
+            var minutesLabel = String(minutes)
+            var secondsLabel = String(seconds)
+            if minutes < 10{
+                minutesLabel = "0" + minutesLabel
+            }
+            if seconds < 10{
+                secondsLabel = "0" + secondsLabel
+            }
+            self.timeLabel.text =  minutesLabel + ":" + secondsLabel
+        }
+        
+        // set image's pick order
         self.pickOrderLabel.text = "\(index)"
     }
 }
