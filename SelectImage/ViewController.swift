@@ -13,12 +13,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
     
-    @IBOutlet weak var imageCollection: UICollectionView!
+    @IBOutlet weak var imageCollectionView: UICollectionView!
     
     @IBOutlet weak var imageSelectionView: UIView!
     @IBOutlet weak var informLabel: UILabel!
     @IBOutlet weak var addButton: UIButton!
-    @IBOutlet weak var selectedImageCollection: UICollectionView!
+    @IBOutlet weak var selectedImageCollectionView: UICollectionView!
     
     private var isSelected = false
     private var selectedArray = [Int]()
@@ -29,7 +29,7 @@ class ViewController: UIViewController {
         isSelected = false
         for value in selectedArray{
             let indexPath = IndexPath(row: value, section: 0)
-            let cell = imageCollection.cellForItem(at: indexPath) as! CollectionViewCell
+            let cell = imageCollectionView.cellForItem(at: indexPath) as! CollectionViewCell
             cell.highlightView.alpha = 0
             cell.isChosen = false
         }
@@ -43,7 +43,7 @@ class ViewController: UIViewController {
         var order = 1
         for value in selectedArray{
             let indexPath = IndexPath(row: value, section: 0)
-            let cell = imageCollection.cellForItem(at: indexPath) as! CollectionViewCell
+            let cell = imageCollectionView.cellForItem(at: indexPath) as! CollectionViewCell
             cell.pickOrderLabel.text = "\(order)"
             order += 1
         }
@@ -61,7 +61,7 @@ class ViewController: UIViewController {
                     self.images.append(object)
                 }
                 DispatchQueue.main.async {
-                    self.imageCollection.reloadData()
+                    self.imageCollectionView.reloadData()
                 }
             }
         }
@@ -70,30 +70,30 @@ class ViewController: UIViewController {
     @objc func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer){
         switch gesture.state{
         case .began:
-            guard let targetIndexPath = selectedImageCollection.indexPathForItem(at: gesture.location(in: selectedImageCollection)) else {
+            guard let targetIndexPath = selectedImageCollectionView.indexPathForItem(at: gesture.location(in: selectedImageCollectionView)) else {
                 return
             }
-            selectedImageCollection.beginInteractiveMovementForItem(at: targetIndexPath)
+            selectedImageCollectionView.beginInteractiveMovementForItem(at: targetIndexPath)
         case .changed:
-            selectedImageCollection.updateInteractiveMovementTargetPosition(gesture.location(in: selectedImageCollection))
+            selectedImageCollectionView.updateInteractiveMovementTargetPosition(gesture.location(in: selectedImageCollectionView))
         case .ended:
-            selectedImageCollection.endInteractiveMovement()
+            selectedImageCollectionView.endInteractiveMovement()
             updateSelectOrder()
         default:
-            selectedImageCollection.cancelInteractiveMovement()
+            selectedImageCollectionView.cancelInteractiveMovement()
         }
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        imageCollection.delegate = self
-        imageCollection.dataSource = self
-        self.imageCollection.register(UINib(nibName: "CollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "CollectionViewCell")
+        imageCollectionView.delegate = self
+        imageCollectionView.dataSource = self
+        self.imageCollectionView.register(UINib(nibName: "CollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "CollectionViewCell")
         
-        selectedImageCollection.delegate = self
-        selectedImageCollection.dataSource = self
-        self.selectedImageCollection.register(UINib(nibName: "SelectedImageCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "SelectedImageCollectionViewCell")
+        selectedImageCollectionView.delegate = self
+        selectedImageCollectionView.dataSource = self
+        self.selectedImageCollectionView.register(UINib(nibName: "SelectedImageCollectionViewCell", bundle: Bundle.main), forCellWithReuseIdentifier: "SelectedImageCollectionViewCell")
         
         // make button edges round
         addButton.layer.cornerRadius = addButton.bounds.height / 2
@@ -103,14 +103,14 @@ class ViewController: UIViewController {
         
         // allow reorder by longpressing the selected image
         let gesture = UILongPressGestureRecognizer(target: self, action:#selector(handleLongPressGesture(_:)))
-        selectedImageCollection.addGestureRecognizer(gesture)
+        selectedImageCollectionView.addGestureRecognizer(gesture)
     }
 }
 
 // MARK: - UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if collectionView == self.imageCollection{
+        if collectionView == self.imageCollectionView{
             return images.count
         }
         else{
@@ -119,10 +119,10 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        if collectionView == self.imageCollection{
+        if collectionView == self.imageCollectionView{
             let noOfCellInRow = 4
             
-            let size = (imageCollection.bounds.width - CGFloat(noOfCellInRow + 1)) / CGFloat(noOfCellInRow)
+            let size = (imageCollectionView.bounds.width - CGFloat(noOfCellInRow + 1)) / CGFloat(noOfCellInRow)
             
             return CGSize(width: size, height: size)
         }
@@ -133,7 +133,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if collectionView == self.imageCollection{
+        if collectionView == self.imageCollectionView{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
             let index = selectedArray.firstIndex(of: indexPath.row)
             cell.createCell(index: index ?? 0, assets: images[indexPath.row])
@@ -145,7 +145,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             
             //get the selected image
             let imageIndexPath = IndexPath(row: selectedArray[indexPath.row], section: 0)
-            let imageCell = imageCollection.cellForItem(at: imageIndexPath) as! CollectionViewCell
+            let imageCell = imageCollectionView.cellForItem(at: imageIndexPath) as! CollectionViewCell
             let image = imageCell.imageView.image
             cell.selectedIndex = selectedArray[indexPath.row]
             cell.createCell(image: image!)
@@ -154,7 +154,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if collectionView == self.imageCollection{
+        if collectionView == self.imageCollectionView{
             let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
             if cell.isChosen{
                 cell.isChosen = false
@@ -182,7 +182,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
                 cell.highlightView.alpha = 0.5
                 updateSelectOrder()
             }
-            self.selectedImageCollection.reloadData()
+            self.selectedImageCollectionView.reloadData()
         }
         else{
             //no function when tap the selected images
@@ -203,7 +203,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
 extension ViewController: SelectedImageCollectionViewCellDelegate{
     func selectedImageCollectionViewCell(_ cell: SelectedImageCollectionViewCell, didTapDeleteButtonWithIndex index: Int) {
         let indexPath = IndexPath(row: index, section: 0)
-        let cell = self.imageCollection.cellForItem(at: indexPath) as! CollectionViewCell
+        let cell = self.imageCollectionView.cellForItem(at: indexPath) as! CollectionViewCell
         cell.isChosen = false
         cell.highlightView.alpha = 0
         let deletedIndex = selectedArray.firstIndex(of: indexPath.row)
@@ -214,6 +214,6 @@ extension ViewController: SelectedImageCollectionViewCellDelegate{
             self.backButton.isHidden = true
         }
         updateSelectOrder()
-        self.selectedImageCollection.reloadData()
+        self.selectedImageCollectionView.reloadData()
     }
 }
