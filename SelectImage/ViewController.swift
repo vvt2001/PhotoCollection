@@ -49,8 +49,7 @@ class ViewController: UIViewController {
         }
     }
     
-    // get image from photo library
-    private func getImage(){
+    private func LoadAssetFromPhotos(){
         PHPhotoLibrary.requestAuthorization{ status in
             if status == .authorized {
                 let imageAssets = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: nil)
@@ -112,7 +111,7 @@ class ViewController: UIViewController {
         
         collectionViewCellRegister()
         makeButtonRound()
-        getImage()
+        LoadAssetFromPhotos()
         addReorderGesture()
     }
 }
