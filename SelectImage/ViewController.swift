@@ -68,7 +68,7 @@ class ViewController: UIViewController {
         }
     }
     
-    private func LoadAssetFromPhotos(){
+    private func loadAssetFromPhotos(){
         PHPhotoLibrary.requestAuthorization{ status in
             if status == .authorized {
                 let imageAssets = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: nil)
@@ -130,8 +130,14 @@ class ViewController: UIViewController {
         
         collectionViewCellRegister()
         makeButtonRound()
-        LoadAssetFromPhotos()
         addReorderGesture()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    @objc func willEnterForeground(){
+        images.removeAll()
+        loadAssetFromPhotos()
     }
 }
 
