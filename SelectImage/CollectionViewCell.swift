@@ -38,7 +38,7 @@ class CollectionViewCell: UICollectionViewCell {
                 self.imageView.image = image
             }
         }
-        setVideoDuration(asset: asset)
+        setVideoTimeLabel(asset: asset)
         // set image's pick order
         self.pickOrderLabel.text = "\(index)"
     }
@@ -48,7 +48,7 @@ class CollectionViewCell: UICollectionViewCell {
         highlightView.alpha = isChosen ? 0.5 : 0
     }
     
-    func setVideoDuration(asset: PHAsset){
+    func setVideoTimeLabel(asset: PHAsset){
         // get video's duration
         if asset.duration != 0{
             let minutes = Int(asset.duration / 60)
