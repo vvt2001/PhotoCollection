@@ -13,7 +13,7 @@ class SelectedImageCollectionViewCell: UICollectionViewCell {
     @IBOutlet private weak var deleteButton: UIButton!
     @IBOutlet private weak var imageView: UIImageView!
     
-    var delegate: SelectedImageCollectionViewCellDelegate?
+    weak var delegate: SelectedImageCollectionViewCellDelegate?
     var index: Int!
     
     @IBAction func deleteSelectedImage(_ sender: UIButton){
@@ -31,6 +31,6 @@ class SelectedImageCollectionViewCell: UICollectionViewCell {
     }
 }
 
-protocol SelectedImageCollectionViewCellDelegate{
+protocol SelectedImageCollectionViewCellDelegate: AnyObject{
     func selectedImageCollectionViewCell(_ cell: SelectedImageCollectionViewCell, didTapDeleteButtonWithIndex index: Int)
 }
