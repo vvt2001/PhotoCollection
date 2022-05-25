@@ -54,8 +54,7 @@ class CollectionViewCell: UICollectionViewCell {
             self.timeLabel.text =  minutesLabel + ":" + secondsLabel
         }
         
-        // set image's pick order
-        self.pickOrderLabel.text = "\(index)"
+        setPickOrderLabel(order: index)
     }
     
     func changeChosenCell(){
