@@ -30,19 +30,19 @@ class CollectionViewCell: UICollectionViewCell {
         imageView.bringSubviewToFront(view)
     }
     
-    func createCell(index: Int, assets: PHAsset) {
+    func createCell(index: Int, asset: PHAsset) {
         // get image or video's thumbnail
         let manager = PHImageManager.default()
-        manager.requestImage(for: assets, targetSize: CGSize(width: self.bounds.width, height: self.bounds.height), contentMode: .aspectFill, options: nil){ image, _ in
+        manager.requestImage(for: asset, targetSize: CGSize(width: self.bounds.width, height: self.bounds.height), contentMode: .aspectFill, options: nil){ image, _ in
             DispatchQueue.main.async {
                 self.imageView.image = image
             }
         }
         
         // get video's duration
-        if assets.duration != 0{
-            let minutes = Int(assets.duration / 60)
-            let seconds = Int(assets.duration.truncatingRemainder(dividingBy: 60))
+        if asset.duration != 0{
+            let minutes = Int(asset.duration / 60)
+            let seconds = Int(asset.duration.truncatingRemainder(dividingBy: 60))
             var minutesLabel = String(minutes)
             var secondsLabel = String(seconds)
             if minutes < 10{
