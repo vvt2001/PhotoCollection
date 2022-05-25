@@ -14,10 +14,10 @@ class SelectedImageCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     
     var delegate: SelectedImageCollectionViewCellDelegate?
-    var selectedIndex: Int!
+    var index: Int!
     
     @IBAction func deleteSelectedImage(_ sender: UIButton){
-        delegate?.selectedImageCollectionViewCell(self, didTapDeleteButtonWithIndex: selectedIndex)
+        delegate?.selectedImageCollectionViewCell(self, didTapDeleteButtonWithIndex: index)
     }
     
     func createCell(asset: PHAsset){
