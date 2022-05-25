@@ -153,7 +153,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             cell.delegate = self
             
             //get the selected image assets
-            cell.selectedIndex = selectedIndexArray[indexPath.row]
+            cell.index = selectedIndexArray[indexPath.row]
             cell.createCell(asset: images[selectedIndexArray[indexPath.row]])
             return cell
         }
