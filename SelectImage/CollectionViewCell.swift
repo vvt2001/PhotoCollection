@@ -39,7 +39,7 @@ class CollectionViewCell: UICollectionViewCell {
             }
         }
         setVideoTimeLabel(asset: asset)
-        
+
         // set image's pick order
         self.pickOrderLabel.text = "\(index)"
     }
