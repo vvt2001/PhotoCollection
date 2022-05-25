@@ -10,8 +10,8 @@ import Photos
 
 class SelectedImageCollectionViewCell: UICollectionViewCell {
 
-    @IBOutlet weak var deleteButton: UIButton!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet private weak var deleteButton: UIButton!
+    @IBOutlet private weak var imageView: UIImageView!
     
     var delegate: SelectedImageCollectionViewCellDelegate?
     var selectedIndex: Int!
