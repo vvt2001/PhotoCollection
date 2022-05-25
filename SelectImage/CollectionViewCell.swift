@@ -59,7 +59,7 @@ class CollectionViewCell: UICollectionViewCell {
     }
     
     func changeChosenCell(){
-        isChosen = isChosen ? false : true
+        isChosen = !isChosen
         highlightView.alpha = isChosen ? 0.5 : 0
     }
 }
