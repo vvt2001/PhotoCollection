@@ -24,7 +24,7 @@ class ViewController: UIViewController {
     private var selectedIndexArray = [Int]()
     private var selectedImageCellSize: Int?
     private var images = [PHAsset]()
-    
+
     func animateShow(view: UIView){
         UIView.animate(withDuration: 0.5, animations: {
             view.transform = CGAffineTransform(translationX: 0, y: -(view.bounds.height))
