@@ -9,16 +9,16 @@ import UIKit
 import Photos
 
 class ViewController: UIViewController {    
-    @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var backButton: UIButton!
+    @IBOutlet private weak var headerView: UIView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var backButton: UIButton!
     
-    @IBOutlet weak var imageCollectionView: UICollectionView!
+    @IBOutlet private weak var imageCollectionView: UICollectionView!
     
-    @IBOutlet weak var imageSelectionView: UIView!
-    @IBOutlet weak var informLabel: UILabel!
-    @IBOutlet weak var addButton: UIButton!
-    @IBOutlet weak var selectedImageCollectionView: UICollectionView!
+    @IBOutlet private weak var imageSelectionView: UIView!
+    @IBOutlet private weak var informLabel: UILabel!
+    @IBOutlet private weak var addButton: UIButton!
+    @IBOutlet private weak var selectedImageCollectionView: UICollectionView!
     
     private var isSelected = false
     private var selectedIndexArray = [Int]()
@@ -30,8 +30,7 @@ class ViewController: UIViewController {
         for value in selectedIndexArray{
             let indexPath = IndexPath(row: value, section: 0)
             let cell = imageCollectionView.cellForItem(at: indexPath) as! CollectionViewCell
-            cell.highlightView.alpha = 0
-            cell.isChosen = false
+            cell.changeChosenCell()
         }
         selectedIndexArray.removeAll()
         self.imageSelectionView.isHidden = true
@@ -44,7 +43,7 @@ class ViewController: UIViewController {
         for value in selectedIndexArray{
             let indexPath = IndexPath(row: value, section: 0)
             let cell = imageCollectionView.cellForItem(at: indexPath) as! CollectionViewCell
-            cell.pickOrderLabel.text = "\(order)"
+            cell.setPickOrderLabel(order: order)
             order += 1
         }
     }
@@ -204,8 +203,7 @@ extension ViewController: SelectedImageCollectionViewCellDelegate{
     func selectedImageCollectionViewCell(_ cell: SelectedImageCollectionViewCell, didTapDeleteButtonWithIndex index: Int) {
         let indexPath = IndexPath(row: index, section: 0)
         let cell = self.imageCollectionView.cellForItem(at: indexPath) as! CollectionViewCell
-        cell.isChosen = false
-        cell.highlightView.alpha = 0
+        cell.changeChosenCell()
         let deletedIndex = selectedIndexArray.firstIndex(of: indexPath.row)
         selectedIndexArray.remove(at: deletedIndex!)
         if selectedIndexArray.count == 0{

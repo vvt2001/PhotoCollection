@@ -9,12 +9,12 @@ import UIKit
 import Photos
 
 class CollectionViewCell: UICollectionViewCell {
-    @IBOutlet weak var imageView: UIImageView!
-    @IBOutlet weak var timeLabel: UILabel!
-    @IBOutlet weak var highlightView: UIView!
-    @IBOutlet weak var pickOrderLabel: UILabel!
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var timeLabel: UILabel!
+    @IBOutlet private weak var highlightView: UIView!
+    @IBOutlet private weak var pickOrderLabel: UILabel!
 
-    var isChosen = false
+    private var isChosen = false
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -54,13 +54,16 @@ class CollectionViewCell: UICollectionViewCell {
             self.timeLabel.text =  minutesLabel + ":" + secondsLabel
         }
         
-        // set image's pick order
-        self.pickOrderLabel.text = "\(index)"
+        setPickOrderLabel(order: index)
     }
     
     func changeChosenCell(){
         isChosen = !isChosen
         highlightView.alpha = isChosen ? 0.5 : 0
+    }
+    
+    func setPickOrderLabel(order: Int){
+        self.pickOrderLabel.text = "\(order)"
     }
 }
 
