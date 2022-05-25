@@ -8,7 +8,7 @@
 import UIKit
 import Photos
 
-class ViewController: UIViewController {
+class ViewController: UIViewController {    
     @IBOutlet weak var headerView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var backButton: UIButton!
@@ -161,33 +161,27 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == self.imageCollectionView{
-            let cell = collectionView.cellForItem(at: indexPath) as! CollectionViewCell
-            if cell.isChosen{
-                cell.isChosen = false
-                cell.highlightView.alpha = 0
-                let index = selectedIndexArray.firstIndex(of: indexPath.row)
-                selectedIndexArray.remove(at: index!)
+            let cell = imageCollectionView.cellForItem(at: indexPath) as! CollectionViewCell
+            cell.changeChosenCell()
+            
+            //if image was already selected
+            if let index = selectedIndexArray.firstIndex(of: indexPath.row){
+                selectedIndexArray.remove(at: index)
                 if selectedIndexArray.count == 0{
                     isSelected = false
                     self.imageSelectionView.isHidden = true
                     self.backButton.isHidden = true
                 }
-                updateSelectOrder()
             }
-            else{
-                cell.isChosen = true
-                if isSelected == false{
+            else {
+                selectedIndexArray.append(indexPath.row)
+                if !isSelected{
                     isSelected = true
                     self.imageSelectionView.isHidden = false
                     self.backButton.isHidden = false
-                    selectedIndexArray.append(indexPath.row)
                 }
-                else{
-                    selectedIndexArray.append(indexPath.row)
-                }
-                cell.highlightView.alpha = 0.5
-                updateSelectOrder()
             }
+            updateSelectOrder()
             self.selectedImageCollectionView.reloadData()
         }
         else{

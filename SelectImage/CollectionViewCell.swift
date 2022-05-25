@@ -57,4 +57,10 @@ class CollectionViewCell: UICollectionViewCell {
         // set image's pick order
         self.pickOrderLabel.text = "\(index)"
     }
+    
+    func changeChosenCell(){
+        isChosen = !isChosen
+        highlightView.alpha = isChosen ? 0.5 : 0
+    }
 }
+
