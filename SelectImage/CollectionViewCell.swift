@@ -63,12 +63,6 @@ class CollectionViewCell: UICollectionViewCell {
             }
             self.timeLabel.text =  minutesLabel + ":" + secondsLabel
         }
-        setPickOrderLabel(order: index)
-    }
-    
-    func changeChosenCell(){
-        isChosen = !isChosen
-        highlightView.alpha = isChosen ? 0.5 : 0
     }
     
     func setPickOrderLabel(order: Int){
