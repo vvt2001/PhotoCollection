@@ -64,6 +64,9 @@ class CollectionViewCell: UICollectionViewCell {
             }
             self.timeLabel.text =  minutesLabel + ":" + secondsLabel
         }
+        else{
+            self.timeLabel.text = ""
+        }
     }
     
     func setPickOrderLabel(order: Int){
