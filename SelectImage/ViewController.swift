@@ -25,16 +25,36 @@ class ViewController: UIViewController {
     private var selectedImageCellSize: Int?
     private var images = [PHAsset]()
     
-    @IBAction func goBack(_ sender: UIButton){
+    func animateShow(view: UIView){
+        UIView.animate(withDuration: 0.5, animations: {
+            view.transform = CGAffineTransform(translationX: 0, y: -(view.bounds.height))
+        }, completion: nil)
+    }
+    func animateHide(view: UIView){
+        UIView.animate(withDuration: 0.5, animations: {
+            view.transform = CGAffineTransform(translationX: 0, y: 0)
+        }, completion: nil)
+    }
+    
+    func hideImageSelectionView(){
         isSelected = false
+        animateHide(view: self.imageSelectionView)
+        self.backButton.isHidden = true
+    }
+    func showImageSelectionView(){
+        isSelected = true
+        animateShow(view: self.imageSelectionView)
+        self.backButton.isHidden = false
+    }
+    
+    @IBAction func goBack(_ sender: UIButton){
         for value in selectedIndexArray{
             let indexPath = IndexPath(row: value, section: 0)
             let cell = imageCollectionView.cellForItem(at: indexPath) as! CollectionViewCell
             cell.changeChosenCell()
         }
         selectedIndexArray.removeAll()
-        self.imageSelectionView.hideView()
-        self.backButton.isHidden = true
+        hideImageSelectionView()
         updateSelectOrder()
     }
     
@@ -167,17 +187,13 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             if let index = selectedIndexArray.firstIndex(of: indexPath.row){
                 selectedIndexArray.remove(at: index)
                 if selectedIndexArray.count == 0{
-                    isSelected = false
-                    self.imageSelectionView.hideView()
-                    self.backButton.isHidden = true
+                    hideImageSelectionView()
                 }
             }
             else {
                 selectedIndexArray.append(indexPath.row)
                 if !isSelected{
-                    isSelected = true
-                    self.imageSelectionView.showView()
-                    self.backButton.isHidden = false
+                    showImageSelectionView()
                 }
             }
             updateSelectOrder()
@@ -207,9 +223,7 @@ extension ViewController: SelectedImageCollectionViewCellDelegate{
         let deletedIndex = selectedIndexArray.firstIndex(of: indexPath.row)
         selectedIndexArray.remove(at: deletedIndex!)
         if selectedIndexArray.count == 0{
-            isSelected = false
-            self.imageSelectionView.hideView()
-            self.backButton.isHidden = true
+            hideImageSelectionView()
         }
         updateSelectOrder()
         self.selectedImageCollectionView.reloadData()

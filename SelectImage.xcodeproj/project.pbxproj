@@ -20,7 +20,6 @@
 		E4439600282E4C3C0066C389 /* CollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E44395FE282E4C3C0066C389 /* CollectionViewCell.xib */; };
 		E4A568A92835DDD600784634 /* SelectedImageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4A568A72835DDD600784634 /* SelectedImageCollectionViewCell.swift */; };
 		E4A568AA2835DDD600784634 /* SelectedImageCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E4A568A82835DDD600784634 /* SelectedImageCollectionViewCell.xib */; };
-		E4B19028283F794A00202F33 /* UIViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B19027283F794900202F33 /* UIViewExtension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,7 +57,6 @@
 		E44395FE282E4C3C0066C389 /* CollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionViewCell.xib; sourceTree = "<group>"; };
 		E4A568A72835DDD600784634 /* SelectedImageCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedImageCollectionViewCell.swift; sourceTree = "<group>"; };
 		E4A568A82835DDD600784634 /* SelectedImageCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectedImageCollectionViewCell.xib; sourceTree = "<group>"; };
-		E4B19027283F794900202F33 /* UIViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtension.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,7 +114,6 @@
 				E44395FD282E4C3C0066C389 /* CollectionViewCell.swift */,
 				E44395FE282E4C3C0066C389 /* CollectionViewCell.xib */,
 				E4A568A72835DDD600784634 /* SelectedImageCollectionViewCell.swift */,
-				E4B19027283F794900202F33 /* UIViewExtension.swift */,
 				E4A568A82835DDD600784634 /* SelectedImageCollectionViewCell.xib */,
 				E44395CE282DFA780066C389 /* Assets.xcassets */,
 				E44395D0282DFA780066C389 /* LaunchScreen.storyboard */,
@@ -275,7 +272,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4B19028283F794A00202F33 /* UIViewExtension.swift in Sources */,
 				E44395FF282E4C3C0066C389 /* CollectionViewCell.swift in Sources */,
 				E4A568A92835DDD600784634 /* SelectedImageCollectionViewCell.swift in Sources */,
 				E44395CA282DFA750066C389 /* ViewController.swift in Sources */,
