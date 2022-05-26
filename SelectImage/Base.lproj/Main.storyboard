@@ -74,8 +74,8 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vVB-X3-aaP">
-                                <rect key="frame" x="0.0" y="618" width="414" height="118"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vVB-X3-aaP">
+                                <rect key="frame" x="0.0" y="736" width="414" height="118"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Select at least 1 image" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="anm-x3-Yme">
                                         <rect key="frame" x="16" y="15" width="109" height="12"/>
@@ -132,12 +132,12 @@
                         <constraints>
                             <constraint firstItem="vVB-X3-aaP" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="3it-cq-p7m"/>
                             <constraint firstItem="Yc2-0f-UBs" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="5FW-e1-I0M"/>
+                            <constraint firstItem="vVB-X3-aaP" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" constant="118" id="9Wb-Tn-ajz"/>
                             <constraint firstItem="Jt0-ob-VMn" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="9rc-90-dX6"/>
                             <constraint firstItem="vVB-X3-aaP" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="CUK-rJ-fbb"/>
                             <constraint firstItem="Yc2-0f-UBs" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Mbb-7g-Hqf"/>
                             <constraint firstItem="vVB-X3-aaP" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="RNb-Ry-rFT"/>
                             <constraint firstItem="Yc2-0f-UBs" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="Rrz-2n-F7D"/>
-                            <constraint firstItem="vVB-X3-aaP" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="V5t-3j-k6P"/>
                             <constraint firstItem="Jt0-ob-VMn" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="fJD-oL-6WE"/>
                             <constraint firstItem="Jt0-ob-VMn" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="hZo-AN-N05"/>
                             <constraint firstItem="Yc2-0f-UBs" firstAttribute="top" secondItem="Jt0-ob-VMn" secondAttribute="bottom" id="jkM-k4-34s"/>
