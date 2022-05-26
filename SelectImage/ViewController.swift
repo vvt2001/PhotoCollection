@@ -33,7 +33,7 @@ class ViewController: UIViewController {
             cell.changeChosenCell()
         }
         selectedIndexArray.removeAll()
-        self.imageSelectionView.isHidden = true
+        self.imageSelectionView.hideView()
         self.backButton.isHidden = true
         updateSelectOrder()
     }
@@ -168,7 +168,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
                 selectedIndexArray.remove(at: index)
                 if selectedIndexArray.count == 0{
                     isSelected = false
-                    self.imageSelectionView.isHidden = true
+                    self.imageSelectionView.hideView()
                     self.backButton.isHidden = true
                 }
             }
@@ -176,7 +176,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
                 selectedIndexArray.append(indexPath.row)
                 if !isSelected{
                     isSelected = true
-                    self.imageSelectionView.isHidden = false
+                    self.imageSelectionView.showView()
                     self.backButton.isHidden = false
                 }
             }
@@ -208,7 +208,7 @@ extension ViewController: SelectedImageCollectionViewCellDelegate{
         selectedIndexArray.remove(at: deletedIndex!)
         if selectedIndexArray.count == 0{
             isSelected = false
-            self.imageSelectionView.isHidden = true
+            self.imageSelectionView.hideView()
             self.backButton.isHidden = true
         }
         updateSelectOrder()
