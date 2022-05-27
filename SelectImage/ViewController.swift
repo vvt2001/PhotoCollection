@@ -27,6 +27,7 @@ class ViewController: UIViewController {
 
     func animateShow(view: UIView){
         UIView.animate(withDuration: 0.5, animations: {
+            self.imageSelectionView.isHidden = false
             view.transform = CGAffineTransform(translationX: 0, y: -(view.bounds.height))
         }, completion: nil)
     }
