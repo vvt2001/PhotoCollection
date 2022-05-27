@@ -192,7 +192,7 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
         if collectionView == self.imageCollectionView{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
             let imageAsset = assets[indexPath.row]
-            let index = (selectedImages.firstIndex(of: imageAsset) != nil) ? (selectedImages.firstIndex(of: imageAsset)! + 1) : 0
+            let index = (selectedImages.firstIndex(of: imageAsset) ?? -1) + 1
             cell.createCell(index: index, asset: imageAsset)
             return cell
         }
