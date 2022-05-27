@@ -21,10 +21,10 @@ class ViewController: UIViewController {
     @IBOutlet private weak var selectedImageCollectionView: UICollectionView!
     
     private var isSelected = false
-    private var selectedIndexArray = [Int]()
+    private var selectedImages = [PHAsset]()
     private var selectedImageCellSize: Int?
-    private var images = [PHAsset]()
-    
+    private var assets = [PHAsset]()
+
     func animateShow(view: UIView){
         UIView.animate(withDuration: 0.5, animations: {
             view.transform = CGAffineTransform(translationX: 0, y: -(view.bounds.height))
@@ -48,39 +48,41 @@ class ViewController: UIViewController {
     }
     
     @IBAction func goBack(_ sender: UIButton){
-        for value in selectedIndexArray{
-            let indexPath = IndexPath(row: value, section: 0)
+        for value in selectedImages{
+            let index = assets.firstIndex(of: value)
+            let indexPath = IndexPath(row: index!, section: 0)
             let cell = imageCollectionView.cellForItem(at: indexPath) as! CollectionViewCell
             cell.changeChosenCell()
         }
-        selectedIndexArray.removeAll()
+        selectedImages.removeAll()
         hideImageSelectionView()
         updateSelectOrder()
     }
     
     private func updateSelectOrder(){
         var order = 1
-        for value in selectedIndexArray{
-            let indexPath = IndexPath(row: value, section: 0)
+        for value in selectedImages{
+            let index = assets.firstIndex(of: value)
+            let indexPath = IndexPath(row: index!, section: 0)
             let cell = imageCollectionView.cellForItem(at: indexPath) as! CollectionViewCell
             cell.setPickOrderLabel(order: order)
             order += 1
         }
     }
     
-    private func LoadAssetFromPhotos(){
+    private func loadAssetFromPhotos(handleClosure: @escaping (() -> Void)){
         PHPhotoLibrary.requestAuthorization{ status in
             if status == .authorized {
                 let imageAssets = PHAsset.fetchAssets(with: PHAssetMediaType.image, options: nil)
                 imageAssets.enumerateObjects{ (object, _, _) in
-                    self.images.append(object)
+                    self.assets.append(object)
                 }
                 let videoAssets = PHAsset.fetchAssets(with: PHAssetMediaType.video, options: nil)
                 videoAssets.enumerateObjects{ (object, _, _) in
-                    self.images.append(object)
+                    self.assets.append(object)
                 }
                 DispatchQueue.main.async {
-                    self.imageCollectionView.reloadData()
+                    handleClosure()
                 }
             }
         }
@@ -130,8 +132,34 @@ class ViewController: UIViewController {
         
         collectionViewCellRegister()
         makeButtonRound()
-        LoadAssetFromPhotos()
         addReorderGesture()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(willEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    @objc func willEnterForeground(){
+        assets.removeAll()
+
+        let enterForegroundHandle = { [self] in
+            for value in selectedImages{
+                if assets.firstIndex(of: value) == nil{
+                    let selectedIndex = selectedImages.firstIndex(of: value)
+                    selectedImages.remove(at: selectedIndex!)
+                }
+            }
+            
+            self.imageCollectionView.reloadData()
+            self.selectedImageCollectionView.reloadData()
+            
+            if selectedImages.count == 0 {
+                isSelected = false
+                self.imageSelectionView.isHidden = true
+                self.backButton.isHidden = true
+                updateSelectOrder()
+            }
+        }
+        
+        loadAssetFromPhotos(handleClosure: enterForegroundHandle)
     }
 }
 
@@ -139,10 +167,10 @@ class ViewController: UIViewController {
 extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout{
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.imageCollectionView{
-            return images.count
+            return assets.count
         }
         else{
-            return selectedIndexArray.count
+            return selectedImages.count
         }
     }
     
@@ -163,8 +191,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.imageCollectionView{
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CollectionViewCell", for: indexPath) as! CollectionViewCell
-            let index = selectedIndexArray.firstIndex(of: indexPath.row)
-            cell.createCell(index: index ?? 0, asset: images[indexPath.row])
+            let imageAsset = assets[indexPath.row]
+            let index = (selectedImages.firstIndex(of: imageAsset) ?? -1) + 1
+            cell.createCell(index: index, asset: imageAsset)
             return cell
         }
         else{
@@ -172,8 +201,9 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             cell.delegate = self
             
             //get the selected image assets
-            cell.index = selectedIndexArray[indexPath.row]
-            cell.createCell(asset: images[selectedIndexArray[indexPath.row]])
+
+            cell.index = indexPath.row
+            cell.createCell(asset: selectedImages[indexPath.row])
             return cell
         }
     }
@@ -183,15 +213,17 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
             let cell = imageCollectionView.cellForItem(at: indexPath) as! CollectionViewCell
             cell.changeChosenCell()
             
+            let imageAsset = assets[indexPath.row]
+            
             //if image was already selected
-            if let index = selectedIndexArray.firstIndex(of: indexPath.row){
-                selectedIndexArray.remove(at: index)
-                if selectedIndexArray.count == 0{
+            if let index = selectedImages.firstIndex(of: imageAsset){
+                selectedImages.remove(at: index)
+                if selectedImages.count == 0{
                     hideImageSelectionView()
                 }
             }
             else {
-                selectedIndexArray.append(indexPath.row)
+                selectedImages.append(imageAsset)
                 if !isSelected{
                     showImageSelectionView()
                 }
@@ -209,20 +241,20 @@ extension ViewController: UICollectionViewDelegate, UICollectionViewDataSource, 
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        let item = selectedIndexArray.remove(at: sourceIndexPath.row)
-        selectedIndexArray.insert(item, at: destinationIndexPath.row)
+        let item = selectedImages.remove(at: sourceIndexPath.row)
+        selectedImages.insert(item, at: destinationIndexPath.row)
     }
 }
 
 // MARK: - SelectedImageCollectionViewCellDelegate
 extension ViewController: SelectedImageCollectionViewCellDelegate{
     func selectedImageCollectionViewCell(_ cell: SelectedImageCollectionViewCell, didTapDeleteButtonWithIndex index: Int) {
-        let indexPath = IndexPath(row: index, section: 0)
+        let imageAsset = selectedImages[index]
+        let indexPath = IndexPath(row: assets.firstIndex(of: imageAsset)!, section: 0)
         let cell = self.imageCollectionView.cellForItem(at: indexPath) as! CollectionViewCell
         cell.changeChosenCell()
-        let deletedIndex = selectedIndexArray.firstIndex(of: indexPath.row)
-        selectedIndexArray.remove(at: deletedIndex!)
-        if selectedIndexArray.count == 0{
+        selectedImages.remove(at: index)
+        if selectedImages.count == 0{
             hideImageSelectionView()
         }
         updateSelectOrder()
